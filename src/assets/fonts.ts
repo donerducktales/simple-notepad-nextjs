@@ -1,4 +1,4 @@
-import { Montserrat, Open_Sans, Poppins, Roboto } from "next/font/google";
+import { Montserrat, Nunito, Open_Sans, Poppins, Roboto } from "next/font/google";
 
 export const montserrat = Montserrat({
    subsets: ['latin'],
@@ -18,4 +18,9 @@ export const roboto = Roboto({
 export const poppins = Poppins({
    subsets: ['latin'],
    weight: ['400', '500', '600']
+});
+
+export const nunito = Nunito({
+   subsets: ['latin'],
+   weight: ['400']
 });
