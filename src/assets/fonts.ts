@@ -17,5 +17,5 @@ export const roboto = Roboto({
 
 export const poppins = Poppins({
    subsets: ['latin'],
-   weight: ['400', '500']
+   weight: ['400', '500', '600']
 });
