@@ -1,22 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ClickState {
-   value: number
+   title: string,
+   description: string,
 }
 
 const initialState: ClickState = {
-   value: 0
+   title: 'Hello!',
+   description: 'Here will be your notes',
 }
 
-const clickSlice = createSlice({
-   name: 'click',
+const clickNoteSlice = createSlice({
+   name: 'clickNote',
    initialState,
    reducers: {
-      setValue: (state) => {
-         state.value += 1
+      setTitle: (state, action: PayloadAction<string>) => {
+         state.title = action.payload
+      },
+      setDescription: (state, action: PayloadAction<string>) => {
+         state.description = action.payload
       },
    },
 });
 
-export default clickSlice.reducer;
-export const { setValue } = clickSlice.actions;
+export default clickNoteSlice.reducer;
+export const { setTitle, setDescription } = clickNoteSlice.actions;

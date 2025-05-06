@@ -6,7 +6,7 @@ import Search from "@/components/Search";
 export default function MainMenu() {
    return (
       <div 
-         className={`flex flex-col items-center w-[330px] h-[100vh] bg-dark-800 overflow-y-auto overflow-x-hidden px-[15px] ${poppins.className} ${'main'}`}
+         className={`flex flex-col items-center max-w-[330px] w-full h-[100vh] bg-dark-800 overflow-y-auto overflow-x-hidden px-[15px] ${poppins.className} ${'main'}`}
       >
          <Search />
          <FilterNotes />
