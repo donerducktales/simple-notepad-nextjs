@@ -1,19 +1,31 @@
 'use client'
 
 import { nunito } from "@/assets/fonts";
+import { setDescription, setTitle } from "@/lib/features/clickSlice";
+import { AppDispatch } from "@/lib/store";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-export default function NotePreview({title, description}: {title: string, description: string}) {
+export default function NotePreview(
+   {title, description}: 
+   {title: string, description: string}
+) {
    const [click, setClick] = useState<boolean>(false);
+   const dispatch: AppDispatch = useDispatch();
    
+   function handleClick() {
+      dispatch(setTitle(title));
+      dispatch(setDescription(description));
+   }
+
    return (
-      <div className={`notePreviewWrapper`}>
+      <div className={`w-full ${'notePreviewWrapper'}`} onClick={handleClick}>
          <div className={`flex flex-col items-start p-3 w-full min-h-[135px] rounded-lg bg-dark-900 ${'notePreview'}`}>
             <div className={`flex flex-col items-start gap-[6px] ${'notePreviewText'}`}>
                <h1 className={`text-base text-white font-medium`}>{title}</h1>
-               <p className={`text-xs text-light-800 mr-8 leading-5`}>{description}...</p>
+               <p className={`text-xs text-light-800 mr-8 leading-5`}>{description.slice(0, 75)}...</p>
             </div>
             <div className={`w-full flex flex-col items-end mt-1 ${'notePreviewDropdownButtonWrapper'}`}>
                <button 

@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import clickSlice from './features/clickSlice'
+import clickNoteSlice from './features/clickSlice'
 
 const rootReducer = combineReducers({
-   click: clickSlice,
+   clickNote: clickNoteSlice,
 });
 
 const store = configureStore({
