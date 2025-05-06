@@ -19,10 +19,10 @@ export default function FilterNotes() {
             <FunnelIcon className="w-4 h-4"/>
             <h1 className={`text-sm font-medium`}>Filter</h1>
          </div>
-         <div className={`flex flex-row flex-wrap gap-2 gap-x-2 ${'filterNotesButtons'}`}>
+         <div className={`flex flex-row flex-wrap md:gap-2 md:gap-x-2 gap-2.5 gap-x-2.5 ${'filterNotesButtons'}`}>
             {initialFilters.map((el, index) => 
                <button 
-                  className={`h-[23px] rounded-2xl border border-solid border-primaryBlue ${click[index] ? 'bg-primaryBlue text-dark-800' : 'bg-dark-800 text-primaryBlue'} font-semibold px-2 py-[3px] flex items-center justify-center`}
+                  className={`md:h-[23px] h-8 rounded-2xl border border-solid border-primaryBlue ${click[index] ? 'bg-primaryBlue text-dark-800' : 'bg-dark-800 text-primaryBlue'} font-semibold px-2 py-[3px] flex items-center justify-center`}
                   key={el} onClick={() => handleFilterClick(index)}
                >
                   #{el}

@@ -8,7 +8,7 @@ export default function MainNote() {
    const description = useSelector((state: RootState) => state.clickNote.description);
    
    return (
-      <section className={`w-full flex flex-col items-start text-white ${'mainNote'}`}>
+      <section className={`w-full flex flex-col mt-20 ml-12 mr-20 items-start text-white ${'mainNote'}`}>
          <h1 className={`text-5xl font-normal ${'mainNoteHeader'}`}>
             {title}
          </h1>
