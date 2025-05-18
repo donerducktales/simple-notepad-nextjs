@@ -1,10 +1,12 @@
 'use client'
 
+import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { nunito } from "@/assets/fonts";
 import { setDescription, setTitle } from "@/lib/features/clickSlice";
 import { AppDispatch } from "@/lib/store";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -14,10 +16,19 @@ export default function NotePreview(
 ) {
    const [click, setClick] = useState<boolean>(false);
    const dispatch: AppDispatch = useDispatch();
+
+   const router = useRouter();
+   const viewPortSize = useViewPortSize();
    
    function handleClick() {
       dispatch(setTitle(title));
       dispatch(setDescription(description));
+      
+      if (viewPortSize.width < 768) {
+         router.push('/note')
+      } else {
+         return;
+      }
    }
 
    return (
@@ -29,7 +40,7 @@ export default function NotePreview(
             </div>
             <div className={`w-full flex flex-col items-end mt-1 ${'notePreviewDropdownButtonWrapper'}`}>
                <button 
-                  className={`flex items-center justify-center rounded-[100%] w-7 h-7 ${click ? 'bg-dark-900 border border-[#232938]' : 'bg-[#232938] border-none'} ${'notePreviewDropdownButton'}`}
+                  className={`flex items-center justify-center rounded-[100%] w-7 h-7 max-md:hidden ${click ? 'bg-dark-900 border border-[#232938]' : 'bg-[#232938] border-none'} ${'notePreviewDropdownButton'}`}
                   onClick={() => setClick(!click)}
                >
                   <EllipsisVerticalIcon className="w-6 text-primaryBlue" />
