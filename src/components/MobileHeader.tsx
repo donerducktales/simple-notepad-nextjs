@@ -16,7 +16,7 @@ export default function MobileHeader() {
                   <ArrowLeftIcon className="text-white w-6 h-4"/>
                </button>
             </Link>
-            <div className={`flex gap-12 items-center ${'rightPanelWrapper'}`}>
+            <div className={`relative flex gap-12 items-center ${'rightPanelWrapper'}`}>
                <PencilIcon className="text-white w-6 h-4"/>
                <button 
                   className={`${'contextMenuToggle'}`}
@@ -24,14 +24,14 @@ export default function MobileHeader() {
                > 
                   <EllipsisVerticalIcon className="text-white w-6"/>
                </button>
+               {
+                  openContext && 
+                  <div className={`absolute top-8 right-0.5 rounded-sm w-3xs bg-dark-800 mt-3 ${'contextMenu'}`}>
+                     example
+                  </div>
+               }  
             </div>
          </header>
-         {
-            openContext && 
-            <div className={`rounded-sm w-3xs bg-dark-800 mt-2 mr-4 ${'contextMenu'}`}>
-               example
-            </div>
-         }
       </div>
    )
 }
