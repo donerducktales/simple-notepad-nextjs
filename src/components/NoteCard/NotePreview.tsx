@@ -3,7 +3,8 @@
 import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { nunito } from "@/assets/fonts";
 import { setDescription, setTitle } from "@/lib/features/clickSlice";
-import { AppDispatch } from "@/lib/store";
+import { setClickPost } from "@/lib/features/createPostSlice";
+import { AppDispatch, RootState } from "@/lib/store";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
@@ -23,6 +24,7 @@ export default function NotePreview(
    function handleClick() {
       dispatch(setTitle(title));
       dispatch(setDescription(description));
+      dispatch(setClickPost(false));
       
       if (viewPortSize.width < 768) {
          router.push('/note')

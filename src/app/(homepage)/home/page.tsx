@@ -1,5 +1,7 @@
+import CreateButton from "@/components/CreateButton";
 import MainMenu from "@/layouts/mainmenu/MainMenu";
 import NoteLayout from "@/layouts/noteLayout/NoteLayout";
+import RightSideLayout from "@/layouts/rightSideLayout/RightSideLayout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,7 +13,9 @@ export default function Home() {
    return (
       <div className={`flex flex-row max-h-[100vh] h-full overflow-y-hidden ${'main'}`}>
          <MainMenu />
-         <NoteLayout /> 
+         {/* <NoteLayout /> */}
+         <RightSideLayout />
+         <CreateButton />
       </div>
    )
 }
