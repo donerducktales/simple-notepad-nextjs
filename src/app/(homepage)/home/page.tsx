@@ -1,6 +1,5 @@
 import CreateButton from "@/components/CreateButton";
 import MainMenu from "@/layouts/mainmenu/MainMenu";
-import NoteLayout from "@/layouts/noteLayout/NoteLayout";
 import RightSideLayout from "@/layouts/rightSideLayout/RightSideLayout";
 import { Metadata } from "next";
 
