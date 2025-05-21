@@ -31,12 +31,14 @@ export default function NotePreview(
       }
    }
 
+   const editedDescription = description.length < 75 ? description : description.slice(0, 75) + ' ...';
+
    return (
       <div className={`w-full ${'notePreviewWrapper'}`} onClick={handleClick}>
          <div className={`flex flex-col items-start p-3 w-full min-h-[115px] rounded-lg bg-dark-900 ${'notePreview'}`}>
             <div className={`flex flex-col items-start gap-[6px] ${'notePreviewText'}`}>
                <h1 className={`text-base text-white font-medium`}>{title}</h1>
-               <p className={`text-xs text-light-800 mr-8 leading-5`}>{description.slice(0, 75)} ...</p>
+               <p className={`text-xs text-light-800 mr-8 leading-5`}>{editedDescription}</p>
             </div>
             <div className={`w-full flex flex-col items-end mt-1 ${'notePreviewDropdownButtonWrapper'}`}>
                <button 
