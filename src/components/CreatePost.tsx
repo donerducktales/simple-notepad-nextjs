@@ -1,5 +1,72 @@
+'use client'
+
+import { setClickPost } from "@/lib/features/createPostSlice";
+import { AppDispatch, RootState } from "@/lib/store";
+import { ArrowLeftIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function CreatePost() {
+   const dispatch: AppDispatch = useDispatch();
+   const clickState = useSelector((state: RootState) => state.clickPost.click);
+   const [title, setTitle] = useState<string>('');
+   const [description, setDescription] = useState<string>('');
+   const router = useRouter()
+
+   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+      e.preventDefault();
+      dispatch(setClickPost(false));
+
+      try {
+         const response = await fetch('api', 
+            {
+               body: JSON.stringify({title, description}),
+               method: 'POST'
+            }
+         );
+
+         if (response.ok) {
+            router.refresh();
+         }
+
+      } catch (error) {
+         console.error(error)
+      }
+   }
+   
    return (
-      <div>CreatePost</div>
+      <section className={`flex flex-col w-full mt-9 ml-12 mr-20 ${'createPost'}`}>
+         <button 
+            className={`${'createPostBackButton'}`}
+            onClick={() => dispatch(setClickPost(false))}
+         >
+            <ArrowLeftIcon className="w-6 text-white" />
+         </button>
+         <form
+            className={`flex flex-col items-start mt-4 ${'formPost'}`}
+            onSubmit={handleSubmit}
+         >
+            <input 
+               type="text"
+               placeholder="Type your title" 
+               className={`placeholder-light-800 text-white text-5xl font-normal outline-0 w-full ${'formPostTitle'}`}
+               onChange={(e) => setTitle(e.target.value)}
+            />
+            <span className={`w-full h-[1px] bg-dark-600 my-3 ${'divider'}`}></span>
+            <input 
+               type="text"
+               placeholder="Type your note" 
+               className={`placeholder-light-800 text-white font-normal outline-0 w-full ${'formPostNote'}`}
+               onChange={(e) => setDescription(e.target.value)}
+            />
+            {clickState && <button 
+               type="submit"
+               className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${'formPostSubmitButton'}`}
+            >
+               <ArrowUpTrayIcon className="text-white w-6"/>
+            </button>}
+         </form>
+      </section>
    )
 }

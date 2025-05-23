@@ -20,14 +20,12 @@ export default function CreateButton() {
       }
    }
 
-   return (
-      <Link href={''} className="fixed md:right-10 md:bottom-9 right-4 bottom-6">
-         <button 
-            className={`w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"createButton"}`}
-            onClick={handleClick}
-         >
-            <PlusIcon className="w-6 text-white"/>
-         </button>
-      </Link>
-   );
+   return !clickState && <Link href={''} className="fixed md:right-10 md:bottom-9 right-4 bottom-6">
+      <button 
+         className={`w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"createButton"}`}
+         onClick={handleClick}
+      >
+         <PlusIcon className="w-6 text-white"/>
+      </button>
+   </Link>
 }
