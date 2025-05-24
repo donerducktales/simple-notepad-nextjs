@@ -1,7 +1,8 @@
-// import { notes } from "@/assets/notes";
+'use client'
+
 import { ObjectId, WithId } from "mongodb";
-import { client } from "@/lib/db";
 import NotePreview from "./NotePreview";
+import { useEffect, useState } from "react";
 
 interface Notes {
    id: ObjectId;
@@ -9,24 +10,29 @@ interface Notes {
    description: string;
 }
 
-export default async function NoteWrapper() {
-   async function getNotes() {
-      try {
-         const myClient = await client.connect();
-         const myDb = myClient.db('notes')
-         const myData = await myDb
-            .collection('note')
-            .find()
-            .toArray()
+export default function NoteWrapper() {
+   const [notes, setNotes] = useState<WithId<Notes>[]>([]);
+   
+   useEffect(() => {
+      const getNote = async () => {
+         try {
+            const res = await fetch('api/notes', {
+               method: 'GET',
+               cache: 'no-store'
+            });
 
-         return myData;
-      } catch (error) {
-         console.error(error);
-         return [];
+            if (!res.ok) throw new Error("Failed to fetch notes");
+
+            const data = await res.json() as WithId<Notes>[];
+
+            setNotes(data);
+         } catch (error) {
+            alert(error)
+         }
       }
-   }
 
-   const notes = await getNotes() as WithId<Notes>[];
+      getNote();
+   }, []);
 
    return (
       <div className={`w-full flex flex-col items-center gap-3 mt-7 mb-4 ${'noteWrapper'}`}>
