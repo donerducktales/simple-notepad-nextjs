@@ -1,4 +1,5 @@
-// import { notes } from "@/assets/notes";
+export const dynamic = 'force-dynamic';
+
 import { ObjectId, WithId } from "mongodb";
 import { client } from "@/lib/db";
 import NotePreview from "./NotePreview";
