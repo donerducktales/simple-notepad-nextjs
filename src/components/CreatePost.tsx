@@ -19,10 +19,13 @@ export default function CreatePost() {
       dispatch(setClickPost(false));
 
       try {
-         const response = await fetch('api', 
+         const response = await fetch('/api/notes', 
             {
                body: JSON.stringify({title, description}),
-               method: 'POST'
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'application/json'
+               }
             }
          );
 
