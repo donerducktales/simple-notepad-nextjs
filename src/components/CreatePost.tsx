@@ -30,7 +30,7 @@ export default function CreatePost() {
          );
 
          if (response.ok) {
-            router.refresh();
+            router.push('/home');
          }
 
       } catch (error) {
