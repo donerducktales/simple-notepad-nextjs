@@ -1,4 +1,4 @@
-import { addNote } from "./actions";
+import { addNote } from "../actions";
 
 export async function POST(request: Request) {
    const body = await request.json()
