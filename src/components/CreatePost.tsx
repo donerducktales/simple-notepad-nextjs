@@ -1,5 +1,6 @@
 'use client'
 
+import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { setClickPost } from "@/lib/features/createPostSlice";
 import { AppDispatch, RootState } from "@/lib/store";
 import { ArrowLeftIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
@@ -12,7 +13,8 @@ export default function CreatePost() {
    const clickState = useSelector((state: RootState) => state.clickPost.click);
    const [title, setTitle] = useState<string>('');
    const [description, setDescription] = useState<string>('');
-   const router = useRouter()
+   const router = useRouter();
+   const viewPortSize = useViewPortSize();
 
    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault();
@@ -37,12 +39,12 @@ export default function CreatePost() {
          console.error(error)
       }
    }
-   
+
    return (
-      <section className={`flex flex-col w-full mt-9 ml-12 mr-20 ${'createPost'}`}>
+      <section className={`flex flex-col w-full mt-9 md:ml-12 md:mr-20 ${'createPost'}`}>
          <button 
-            className={`${'createPostBackButton'}`}
-            onClick={() => dispatch(setClickPost(false))}
+            className={`max-md:ml-4 ${'createPostBackButton'}`}
+            onClick={() => viewPortSize.width < 768 ? router.push('/home') : dispatch(setClickPost(false))}
          >
             <ArrowLeftIcon className="w-6 text-white" />
          </button>
@@ -53,22 +55,31 @@ export default function CreatePost() {
             <input 
                type="text"
                placeholder="Type your title" 
-               className={`placeholder-light-800 text-white text-5xl font-normal outline-0 w-full ${'formPostTitle'}`}
+               className={`placeholder-light-800 text-white text-5xl max-sm:text-3xl font-normal outline-0 w-full max-md:ml-4 ${'formPostTitle'}`}
                onChange={(e) => setTitle(e.target.value)}
             />
             <span className={`w-full h-[1px] bg-dark-600 my-3 ${'divider'}`}></span>
             <input 
                type="text"
                placeholder="Type your note" 
-               className={`placeholder-light-800 text-white font-normal outline-0 w-full ${'formPostNote'}`}
+               className={`placeholder-light-800 text-white font-normal outline-0 w-full max-md:ml-4 ${'formPostNote'}`}
                onChange={(e) => setDescription(e.target.value)}
             />
-            {clickState && <button 
-               type="submit"
-               className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${'formPostSubmitButton'}`}
-            >
-               <ArrowUpTrayIcon className="text-white w-6"/>
-            </button>}
+            {
+               viewPortSize.width < 768 
+               ? <button 
+                  type="submit"
+                  className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${'formPostSubmitButton'}`}
+               >
+                  <ArrowUpTrayIcon className="text-white w-6"/>
+               </button>
+               : clickState && <button 
+                  type="submit"
+                  className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${'formPostSubmitButton'}`}
+               >
+                  <ArrowUpTrayIcon className="text-white w-6"/>
+               </button>
+            }
          </form>
       </section>
    )
