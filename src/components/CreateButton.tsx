@@ -20,12 +20,21 @@ export default function CreateButton() {
       }
    }
 
-   return !clickState && <Link href={''} className="fixed md:right-10 md:bottom-9 right-4 bottom-6">
-      <button 
-         className={`w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"createButton"}`}
+   if (viewPortSize.width < 768) {
+      return !clickState && <Link href={'/home/createNote'} className="fixed md:right-10 md:bottom-9 right-4 bottom-6">
+         <button 
+            className={`w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"createButton"}`}
+            onClick={handleClick}
+         >
+            <PlusIcon className="w-6 text-white"/>
+         </button>
+      </Link>
+   } else {
+      return !clickState && <button 
+         className={`w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center fixed md:right-10 md:bottom-9 right-4 bottom-6 ${"createButton"}`}
          onClick={handleClick}
       >
          <PlusIcon className="w-6 text-white"/>
       </button>
-   </Link>
+   }
 }
