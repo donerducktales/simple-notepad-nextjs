@@ -13,7 +13,7 @@ interface Notes {
 const fetcher = async (url: string) => {
    const res = await fetch(url, {
       method: 'GET',
-      cache: 'no-store' // Забезпечуємо, щоб завжди отримувалися свіжі дані
+      cache: 'no-store'
    });
 
    if (!res.ok) {
