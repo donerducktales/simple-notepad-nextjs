@@ -41,6 +41,7 @@ export default function NoteWrapper() {
                key={el._id.toString()}
                title={el.title}
                description={el.description}
+               _id={el._id}
             />
          )}
       </div>

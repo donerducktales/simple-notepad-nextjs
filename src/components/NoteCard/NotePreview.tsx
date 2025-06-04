@@ -6,14 +6,16 @@ import { setDescription, setTitle } from "@/lib/features/clickSlice";
 import { setClickPost } from "@/lib/features/createPostSlice";
 import { AppDispatch } from "@/lib/store";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import DeleteNoteButton from "../DeleteNoteButton";
+import { ObjectId } from "mongodb";
 
 export default function NotePreview(
-   {title, description}: 
-   {title: string, description: string}
+   {_id, title, description}: 
+   {_id: ObjectId, title: string, description: string}
 ) {
    const [click, setClick] = useState<boolean>(false);
    const dispatch: AppDispatch = useDispatch();
@@ -62,12 +64,7 @@ export default function NotePreview(
                      <PencilSquareIcon className="w-4 text-primaryBlue" /> 
                      update
                   </button>
-                  <button 
-                     className={`flex flex-row justify-start items-center pl-3 gap-2 text-white text-sm bg-dark-900 h-[30px] w-full`}
-                  >
-                     <TrashIcon className="w-4 text-primaryRed" /> 
-                     delete
-                  </button>
+                  <DeleteNoteButton _id={_id.toString()}/>
                </div>
             </div>
          }
