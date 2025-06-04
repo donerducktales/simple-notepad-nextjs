@@ -2,7 +2,7 @@
 
 import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { nunito } from "@/assets/fonts";
-import { setDescription, setTitle } from "@/lib/features/clickSlice";
+import { setDescription, setId, setTitle } from "@/lib/features/clickSlice";
 import { setClickPost } from "@/lib/features/createPostSlice";
 import { AppDispatch } from "@/lib/store";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
@@ -24,6 +24,7 @@ export default function NotePreview(
    const viewPortSize = useViewPortSize();
    
    function handleClick() {
+      dispatch(setId(_id));
       dispatch(setTitle(title));
       dispatch(setDescription(description));
       dispatch(setClickPost(false));

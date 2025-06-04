@@ -1,12 +1,12 @@
-'use client'
-
+import { roboto } from "@/assets/fonts";
 import { setDescription, setTitle } from "@/lib/features/clickSlice";
 import { AppDispatch } from "@/lib/store";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 
-export default function DeleteNoteButton({_id}: {_id: string}) {
+export default function DeleteNoteButtonMobile({_id}: {_id: string}) {
    const dispatch: AppDispatch = useDispatch();
+   const router = useRouter();
    
    async function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
       e.preventDefault();
@@ -20,6 +20,7 @@ export default function DeleteNoteButton({_id}: {_id: string}) {
       if (response.ok) {
          dispatch(setTitle('Hello!'));
          dispatch(setDescription('Here will be your notes'));
+         router.push('/home');
          return response;
       } else {
          console.error('error in delete note')
@@ -28,11 +29,10 @@ export default function DeleteNoteButton({_id}: {_id: string}) {
    
    return (
       <button 
-         className={`flex flex-row justify-start items-center pl-3 gap-2 text-white text-sm bg-dark-900 h-[30px] w-full ${'deleteNoteButton'}`}
+         className={`w-full py-3 px-3 flex flex-row-reverse border-b border-dark-700 text-base text-white font-medium ${'deleteNoteButtonMobile'} ${roboto.className}`}
          onClick={handleClick}
       >
-         <TrashIcon className="w-4 text-primaryRed" /> 
-         delete
+         Delete
       </button>
-   );
+   )
 }
