@@ -2,17 +2,20 @@
 
 import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { nunito } from "@/assets/fonts";
-import { setDescription, setTitle } from "@/lib/features/clickSlice";
+import { setDescription, setId, setTitle } from "@/lib/features/clickSlice";
+import { setClickPost } from "@/lib/features/createPostSlice";
 import { AppDispatch } from "@/lib/store";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import DeleteNoteButton from "../DeleteNoteButton";
+import { ObjectId } from "mongodb";
 
 export default function NotePreview(
-   {title, description}: 
-   {title: string, description: string}
+   {_id, title, description}: 
+   {_id: ObjectId, title: string, description: string}
 ) {
    const [click, setClick] = useState<boolean>(false);
    const dispatch: AppDispatch = useDispatch();
@@ -21,8 +24,10 @@ export default function NotePreview(
    const viewPortSize = useViewPortSize();
    
    function handleClick() {
+      dispatch(setId(_id));
       dispatch(setTitle(title));
       dispatch(setDescription(description));
+      dispatch(setClickPost(false));
       
       if (viewPortSize.width < 768) {
          router.push('/note')
@@ -31,12 +36,14 @@ export default function NotePreview(
       }
    }
 
+   const editedDescription = description.length < 75 ? description : description.slice(0, 75) + ' ...';
+
    return (
       <div className={`w-full ${'notePreviewWrapper'}`} onClick={handleClick}>
          <div className={`flex flex-col items-start p-3 w-full min-h-[115px] rounded-lg bg-dark-900 ${'notePreview'}`}>
             <div className={`flex flex-col items-start gap-[6px] ${'notePreviewText'}`}>
                <h1 className={`text-base text-white font-medium`}>{title}</h1>
-               <p className={`text-xs text-light-800 mr-8 leading-5`}>{description.slice(0, 75)} ...</p>
+               <p className={`text-xs text-light-800 mr-8 leading-5`}>{editedDescription}</p>
             </div>
             <div className={`w-full flex flex-col items-end mt-1 ${'notePreviewDropdownButtonWrapper'}`}>
                <button 
@@ -58,12 +65,7 @@ export default function NotePreview(
                      <PencilSquareIcon className="w-4 text-primaryBlue" /> 
                      update
                   </button>
-                  <button 
-                     className={`flex flex-row justify-start items-center pl-3 gap-2 text-white text-sm bg-dark-900 h-[30px] w-full`}
-                  >
-                     <TrashIcon className="w-4 text-primaryRed" /> 
-                     delete
-                  </button>
+                  <DeleteNoteButton _id={_id.toString()}/>
                </div>
             </div>
          }

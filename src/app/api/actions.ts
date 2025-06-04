@@ -1,0 +1,32 @@
+import { client } from "@/lib/db";
+import { ObjectId } from "mongodb";
+
+export async function addNote({title, description}: {title: string, description: string}) {
+   try {
+      const myClient = await client.connect();
+      const myDb = myClient.db('notes');
+      const data = await myDb
+         .collection('note')
+         .insertOne({title: title, description: description})
+
+      return data;
+   } catch (error) {
+      console.error(error);
+   }
+}
+
+export async function deleteNote({_id}: {_id: ObjectId}) {
+   try {
+      const myClient = await client.connect();
+      const myDb = myClient.db('notes');
+      const deleteOneNote = await myDb
+         .collection('note')
+         .deleteOne({_id})
+
+      return deleteOneNote;
+
+   } catch (error) {
+      console.error(error);
+      throw error; 
+   }
+}
