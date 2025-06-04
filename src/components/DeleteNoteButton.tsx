@@ -4,6 +4,7 @@ import { setDescription, setTitle } from "@/lib/features/clickSlice";
 import { AppDispatch } from "@/lib/store";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
+import { mutate } from "swr";
 
 export default function DeleteNoteButton({_id}: {_id: string}) {
    const dispatch: AppDispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function DeleteNoteButton({_id}: {_id: string}) {
       if (response.ok) {
          dispatch(setTitle('Hello!'));
          dispatch(setDescription('Here will be your notes'));
+         mutate('/api/notes')
          return response;
       } else {
          console.error('error in delete note')

@@ -30,4 +30,4 @@ const clickNoteSlice = createSlice({
 });
 
 export default clickNoteSlice.reducer;
-export const { setTitle, setDescription, setId } = clickNoteSlice.actions;
+export const { setId, setTitle, setDescription } = clickNoteSlice.actions;
