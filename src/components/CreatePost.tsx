@@ -7,6 +7,7 @@ import { ArrowLeftIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { mutate } from "swr";
 
 export default function CreatePost() {
    const dispatch: AppDispatch = useDispatch();
@@ -32,7 +33,11 @@ export default function CreatePost() {
          );
 
          if (response.ok) {
-            router.push('/home');
+            mutate('/api/notes'); 
+            router.push('/home')
+            return response;
+         } else {
+            return;
          }
 
       } catch (error) {
