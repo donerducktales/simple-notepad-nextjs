@@ -30,3 +30,33 @@ export async function deleteNote({_id}: {_id: ObjectId}) {
       throw error; 
    }
 }
+
+export async function getNoteById(id: string) {
+   try {
+      const myClient = await client.connect();
+      const myDb = myClient.db('notes');
+      const getOneNote = await myDb
+         .collection('note')
+         .findOne({_id: new ObjectId(id)});
+
+      return getOneNote;
+   } catch (error) {
+      console.error(error);
+      throw error; 
+   }
+}
+
+export async function updateNote({_id, title, description}: {_id: ObjectId, title: string, description: string}) {
+   try {
+      const myClient = await client.connect();
+      const myDb = myClient.db('notes');
+      const updateOneNote = await myDb
+         .collection('note')
+         .findOneAndUpdate({ _id: new ObjectId(_id) }, { $set: { title: title, description: description } })
+   
+      return updateOneNote
+   } catch (error) {
+      console.error(error);
+      throw error;
+   }
+}

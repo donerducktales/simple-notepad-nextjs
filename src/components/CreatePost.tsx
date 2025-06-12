@@ -2,16 +2,16 @@
 
 import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { setClickPost } from "@/lib/features/createPostSlice";
-import { AppDispatch, RootState } from "@/lib/store";
+import { AppDispatch } from "@/lib/store";
 import { ArrowLeftIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { mutate } from "swr";
 
 export default function CreatePost() {
    const dispatch: AppDispatch = useDispatch();
-   const clickState = useSelector((state: RootState) => state.clickPost.click);
+   // const clickState = useSelector((state: RootState) => state.clickPost.click);
    const [title, setTitle] = useState<string>('');
    const [description, setDescription] = useState<string>('');
    const router = useRouter();
@@ -19,7 +19,7 @@ export default function CreatePost() {
 
    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault();
-      dispatch(setClickPost(false));
+      dispatch(setClickPost('inactive'));
 
       try {
          const response = await fetch('/api/notes', 
@@ -49,7 +49,7 @@ export default function CreatePost() {
       <section className={`flex flex-col w-full mt-9 md:ml-12 md:mr-20 ${'createPost'}`}>
          <button 
             className={`max-md:ml-4 ${'createPostBackButton'}`}
-            onClick={() => viewPortSize.width < 768 ? router.push('/home') : dispatch(setClickPost(false))}
+            onClick={() => viewPortSize.width < 768 ? router.push('/home') : dispatch(setClickPost('inactive'))}
          >
             <ArrowLeftIcon className="w-6 text-white" />
          </button>
@@ -78,7 +78,7 @@ export default function CreatePost() {
                >
                   <ArrowUpTrayIcon className="text-white w-6"/>
                </button>
-               : clickState && <button 
+               : <button 
                   type="submit"
                   className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${'formPostSubmitButton'}`}
                >

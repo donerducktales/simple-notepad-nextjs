@@ -26,8 +26,9 @@ const clickNoteSlice = createSlice({
       setDescription: (state, action: PayloadAction<string>) => {
          state.description = action.payload
       },
+      resetClickNoteState: () => ({ ...initialState }),
    },
 });
 
 export default clickNoteSlice.reducer;
-export const { setId, setTitle, setDescription } = clickNoteSlice.actions;
+export const { setId, setTitle, setDescription, resetClickNoteState } = clickNoteSlice.actions;

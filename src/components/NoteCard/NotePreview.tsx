@@ -27,7 +27,7 @@ export default function NotePreview(
       dispatch(setId(_id));
       dispatch(setTitle(title));
       dispatch(setDescription(description));
-      dispatch(setClickPost(false));
+      dispatch(setClickPost('inactive'));
       
       if (viewPortSize.width < 768) {
          router.push('/note')
@@ -56,11 +56,12 @@ export default function NotePreview(
          </div>
          {
             click && <div 
-               className={`w-full flex flex-col items-end ${'dropdownMenu'}`}
+               className={`w-full flex flex-col items-end max-md:hidden ${'dropdownMenu'}`}
             >
                <div className={`flex flex-col gap-[1px] mt-1 w-24 h-12 bg-dark-600 ${nunito.className}`}>
                   <button 
                      className={`flex flex-row justify-start items-center pl-3 gap-2 text-white text-sm bg-dark-900 h-[30px] w-full`}
+                     onClick={(e) => {e.stopPropagation(); dispatch(setClickPost("updatePost"))}}
                   >
                      <PencilSquareIcon className="w-4 text-primaryBlue" /> 
                      update
