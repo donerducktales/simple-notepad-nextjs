@@ -21,7 +21,11 @@ export default function MobileHeader() {
                </button>
             </Link>
             <div className={`relative flex gap-12 items-center ${'rightPanelWrapper'}`}>
-               <PencilIcon className="text-white w-6 h-4"/>
+                  <Link href={'/home/editNote'}>
+                     <button className={`${'editNoteButton'}`}>
+                        <PencilIcon className="text-white w-6 h-4"/>
+                     </button>
+                  </Link>   
                <button 
                   className={`${'contextMenuToggle'}`}
                   onClick={() => setOpen(!openContext)}

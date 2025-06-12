@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface State {
-   click: 'inactive' | 'createPost'
+   click: 'inactive' | 'createPost' | 'updatePost'
 }
 
 const initialState: State = {
@@ -12,7 +12,7 @@ const createPostSlice = createSlice({
    name: 'clickPost',
    initialState,
    reducers: {
-      setClickPost: (state, action: PayloadAction<'inactive' | 'createPost'>) => {
+      setClickPost: (state, action: PayloadAction<'inactive' | 'createPost' | 'updatePost'>) => {
          state.click = action.payload;
       }
    }
