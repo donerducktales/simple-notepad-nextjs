@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface State {
-   click: boolean
+   click: 'inactive' | 'createPost'
 }
 
 const initialState: State = {
-   click: false
+   click: 'inactive'
 }
 
 const createPostSlice = createSlice({
    name: 'clickPost',
    initialState,
    reducers: {
-      setClickPost: (state, action: PayloadAction<boolean>) => {
+      setClickPost: (state, action: PayloadAction<'inactive' | 'createPost'>) => {
          state.click = action.payload;
       }
    }

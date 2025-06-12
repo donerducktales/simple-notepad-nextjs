@@ -27,7 +27,7 @@ export default function NotePreview(
       dispatch(setId(_id));
       dispatch(setTitle(title));
       dispatch(setDescription(description));
-      dispatch(setClickPost(false));
+      dispatch(setClickPost('inactive'));
       
       if (viewPortSize.width < 768) {
          router.push('/note')

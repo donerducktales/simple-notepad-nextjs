@@ -1,5 +1,5 @@
 import { client } from "@/lib/db";
-import { addNote, deleteNote } from "../actions";
+import { addNote, deleteNote, updateNote } from "../actions";
 import { ObjectId } from "mongodb";
 
 export async function GET() {
@@ -23,12 +23,20 @@ export async function POST(request: Request) {
    return new Response(JSON.stringify(addData))
 }
 
+export async function PUT(request: Request) {
+   const body = await request.json()
+   const {_id, title, description} = body;
+
+   const updateOneNote = await updateNote({_id, title, description});
+   
+   return new Response(JSON.stringify(updateOneNote));
+}
+
 export async function DELETE(request: Request) {
    const body = await request.json()
    const {_id} = body;
 
    const deleteOneNote = await deleteNote({ _id: new ObjectId(String(_id)) });
-   console.log(_id)
 
    return new Response(JSON.stringify(deleteOneNote));
 }
