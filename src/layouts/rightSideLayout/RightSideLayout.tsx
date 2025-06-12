@@ -13,6 +13,6 @@ export default function RightSideLayout() {
    if (viewPortSize.width < 768) {
       return;
    } else {
-      return clickState ? <CreatePost /> : <NoteLayout />
+      return clickState === 'createPost' ? <CreatePost /> : <NoteLayout />
    }
 }
