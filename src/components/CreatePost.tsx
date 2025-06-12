@@ -2,16 +2,16 @@
 
 import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { setClickPost } from "@/lib/features/createPostSlice";
-import { AppDispatch, RootState } from "@/lib/store";
+import { AppDispatch } from "@/lib/store";
 import { ArrowLeftIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { mutate } from "swr";
 
 export default function CreatePost() {
    const dispatch: AppDispatch = useDispatch();
-   const clickState = useSelector((state: RootState) => state.clickPost.click);
+   // const clickState = useSelector((state: RootState) => state.clickPost.click);
    const [title, setTitle] = useState<string>('');
    const [description, setDescription] = useState<string>('');
    const router = useRouter();
