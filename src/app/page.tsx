@@ -1,7 +1,9 @@
-export default function Welcome() {
+import Welcome from "@/components/Welcome";
+
+export default function WelcomePage() {
    return (
       <main className={`flex flex-row max-h-[100vh] h-full ${'main'}`}>
-         <p className={`text-light-900`}>hello</p>
+         <Welcome />
       </main>
    );
 }
