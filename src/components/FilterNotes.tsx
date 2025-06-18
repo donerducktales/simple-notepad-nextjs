@@ -24,8 +24,12 @@ const fetcher = async (url: string) => {
 };
 
 export default function FilterNotes() {
-   const { data } = useSWR<WithId<Category>[]>('/api/categories', fetcher);
+   const { data, error, isLoading } = useSWR<WithId<Category>[]>('/api/categories', fetcher);
    const [click, setClick] = useState<boolean[]>(Array(data?.length).fill(false));
+
+   if (isLoading) return <div className="text-white mt-4">Loading...</div>;
+   if (error) return <div className="text-white mt-4">Error {error.message}</div>;
+   if (!data) return <div className="text-white mt-4">There are no categories</div>; 
 
    const handleFilterClick = (index: number) => {
       const newClickedStates = [...click];
