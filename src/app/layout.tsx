@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import './globals.css';
 import StoreProvider from "./StoreProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
    title: "Welcome",
@@ -19,6 +20,7 @@ export default function RootLayout({
          >
             <StoreProvider>
                {children}
+               <Analytics />
             </StoreProvider>
          </body>
       </html>
