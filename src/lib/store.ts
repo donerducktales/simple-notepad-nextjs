@@ -3,15 +3,18 @@ import clickNoteSlice from './features/clickSlice'
 import createPostSlice from './features/createPostSlice';
 import storage from 'redux-persist/lib/storage/session';
 import { persistReducer, persistStore } from 'redux-persist';
+import searchNoteSlice from "./features/searchNoteSlice";
 
 const persistConfig = {
    key: 'root',
    storage,
+   blacklist: ['searchNotes']
 }
 
 const rootReducer = combineReducers({
    clickNote: clickNoteSlice,
    clickPost: createPostSlice,
+   searchNotes: searchNoteSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
