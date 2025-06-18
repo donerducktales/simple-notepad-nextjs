@@ -4,7 +4,6 @@ import { fetchResults, setSearchValue } from "@/lib/features/searchNoteSlice";
 import { AppDispatch, RootState } from "@/lib/store";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Search() {
