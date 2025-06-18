@@ -1,12 +1,32 @@
 'use client'
 
 import { FunnelIcon } from "@heroicons/react/16/solid";
+import { ObjectId, WithId } from "mongodb";
 import { useState } from "react";
+import useSWR from "swr";
+
+interface Category {
+   _id: ObjectId,
+   type: string,
+}
+
+const fetcher = async (url: string) => {
+   const res = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store'
+   });
+
+   if (!res.ok) {
+      throw new Error("Failed to fetch notes");
+   }
+
+   return res.json();
+};
 
 export default function FilterNotes() {
-   const initialFilters = ['laravel', 'javascript', 'css', 'html', 'atom', 'kotlin', 'meeting'];
-   const [click, setClick] = useState<boolean[]>(Array(initialFilters.length).fill(false));
-   
+   const { data } = useSWR<WithId<Category>[]>('/api/categories', fetcher);
+   const [click, setClick] = useState<boolean[]>(Array(data?.length).fill(false));
+
    const handleFilterClick = (index: number) => {
       const newClickedStates = [...click];
       newClickedStates[index] = !newClickedStates[index];
@@ -20,12 +40,12 @@ export default function FilterNotes() {
             <h1 className={`text-sm font-medium`}>Filter</h1>
          </div>
          <div className={`flex flex-row flex-wrap md:gap-2 md:gap-x-2 gap-2.5 gap-x-2.5 ${'filterNotesButtons'}`}>
-            {initialFilters.map((el, index) => 
+            {data?.map((el, index) => 
                <button 
                   className={`md:h-[23px] h-8 rounded-2xl border border-solid border-primaryBlue ${click[index] ? 'bg-primaryBlue text-dark-800' : 'bg-dark-800 text-primaryBlue'} font-semibold px-2 py-[3px] flex items-center justify-center`}
-                  key={el} onClick={() => handleFilterClick(index)}
+                  key={el._id.toString()} onClick={() => handleFilterClick(index)}
                >
-                  #{el}
+                  #{el.type}
                </button>
             )}
          </div>
