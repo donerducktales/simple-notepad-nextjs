@@ -70,10 +70,9 @@ export default function EditNoteForm({noteId, title, description}: {noteId: stri
                onChange={(e) => setTitle(e.target.value)}
             />
             <span className={`w-full h-[1px] bg-dark-600 my-3 ${'divider'}`}></span>
-            <input 
-               type="text"
+            <textarea
                placeholder="Update your note" 
-               className={`placeholder-light-800 text-white font-normal outline-0 w-full max-md:ml-4 ${'editNoteDescription'}`}
+               className={`placeholder-light-800 text-white font-normal outline-0 max-md:ml-4 w-[calc(100%-32px)] min-h-72 resize-none ${'editNoteDescription'}`}
                value={noteDescription}
                onChange={(e) => setDescription(e.target.value)}
             />
