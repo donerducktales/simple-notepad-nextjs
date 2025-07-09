@@ -62,6 +62,7 @@ export default function CreatePost() {
                placeholder="Type your title" 
                className={`placeholder-light-800 text-white text-5xl max-sm:text-3xl font-normal outline-0 w-full max-md:ml-4 ${'formPostTitle'}`}
                onChange={(e) => setTitle(e.target.value)}
+               autoFocus
             />
             <span className={`w-full h-[1px] bg-dark-600 my-3 ${'divider'}`}></span>
             <textarea
