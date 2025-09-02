@@ -5,6 +5,7 @@ interface Note {
    _id: ObjectId,
    title: string,
    description: string,
+   type: string,
 }
 
 interface SearchState {
