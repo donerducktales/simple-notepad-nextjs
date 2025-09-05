@@ -1,11 +1,11 @@
 'use client'
 
 import { selectType } from "@/lib/features/filterNotesSlice";
-import { AppDispatch, RootState } from "@/lib/store";
+import { AppDispatch } from "@/lib/store";
 import { FunnelIcon } from "@heroicons/react/16/solid";
 import { ObjectId, WithId } from "mongodb";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import useSWR from "swr";
 
 interface Category {
@@ -29,7 +29,6 @@ const fetcher = async (url: string) => {
 export default function FilterNotes() {
    const { data, error, isLoading } = useSWR<WithId<Category>[]>('/api/categories', fetcher);
    const [click, setClick] = useState<string>("");
-   const selected = useSelector((state: RootState) => state.filterNotes.selected);
    const dispatch: AppDispatch = useDispatch();
 
    if (isLoading) return <div className="text-white mt-4">Loading...</div>;
@@ -38,11 +37,9 @@ export default function FilterNotes() {
 
    function handleClick(type: string) {
      if (click === type) {
-       // Якщо натиснута вже вибрана кнопка, скидаємо стан
        setClick("");
-       dispatch(selectType(null)); // Також скидаємо Redux стан
+       dispatch(selectType(null));
      } else {
-       // Якщо натиснута інша кнопка, встановлюємо її як активну
        setClick(type);
        dispatch(selectType(type));
      }

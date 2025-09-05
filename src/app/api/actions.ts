@@ -1,13 +1,13 @@
 import { client } from "@/lib/db";
 import { ObjectId } from "mongodb";
 
-export async function addNote({title, description}: {title: string, description: string}) {
+export async function addNote({title, description, type}: {title: string, description: string, type: string}) {
    try {
       const myClient = await client.connect();
       const myDb = myClient.db('notes');
       const data = await myDb
          .collection('note')
-         .insertOne({title: title, description: description})
+         .insertOne({title: title, description: description, type: type})
 
       return data;
    } catch (error) {
