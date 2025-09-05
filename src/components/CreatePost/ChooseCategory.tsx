@@ -52,12 +52,11 @@ export default function ChooseCategory({
   }
 
   return (
-    <div
-      className={`chooseCategoryExisting flex flex-col w-full mt-4 pt-2 border-t border-dark-600`}
-    >
+    <div className={`chooseCategoryExisting flex flex-col w-full`}>
       <div
-        className={`chooseCategoryExisting flex flex-col w-full max-md:px-4`}
+        className={`chooseCategoryExistingWrapper flex flex-col w-full max-md:px-4`}
       >
+        {data.length === 0 ? "" : <p className={`text-light-800 mt-1`}>or:</p>}
         <p className={`text-light-800`}>Choose category from existing:</p>
         <div
           className={`categoryWrapper flex flex-row flex-wrap md:gap-2 md:gap-x-2 gap-2.5 gap-x-2.5 mt-2 ${poppins.className}`}
@@ -78,7 +77,6 @@ export default function ChooseCategory({
             ))
           )}
         </div>
-        {data.length === 0 ? "" : <p className={`text-light-800 mt-1`}>or:</p>}
       </div>
     </div>
   );
