@@ -15,6 +15,20 @@ export async function addNote({title, description, type}: {title: string, descri
    }
 }
 
+export async function addCategory({type}: {type: string}) {
+  try {
+    const myClient = await client.connect();
+    const myDb = myClient.db("notes");
+    const data = await myDb
+      .collection("categories")
+      .insertOne({type: type})
+    
+    return data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+  }
+}
+
 export async function deleteNote({_id}: {_id: ObjectId}) {
    try {
       const myClient = await client.connect();

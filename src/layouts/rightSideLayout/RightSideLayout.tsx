@@ -3,7 +3,7 @@
 import { RootState } from "@/lib/store"
 import { useSelector } from "react-redux"
 import NoteLayout from "../noteLayout/NoteLayout";
-import CreatePost from "@/components/CreatePost";
+import CreatePost from "@/components/CreatePost/CreatePost";
 import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import EditNoteForm from "@/components/EditNoteForm";
 

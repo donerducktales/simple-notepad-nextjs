@@ -1,4 +1,10 @@
-import CreatePost from "@/components/CreatePost";
+import CreatePost from "@/components/CreatePost/CreatePost";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Create note",
+  description: "Create note",
+};
 
 export default function createNote() {
    return (

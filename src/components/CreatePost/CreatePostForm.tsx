@@ -1,15 +1,11 @@
 "use client";
 
-import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { setClickPost } from "@/lib/features/createPostSlice";
 import { AppDispatch } from "@/lib/store";
-import { ArrowLeftIcon, ArrowUpTrayIcon } from "@heroicons/react/24/outline";
+import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { Dispatch, useState } from "react";
 import { mutate } from "swr";
-import ChooseCategory from "./ChooseCategory";
 
 interface CreatePostFormProps {
   dispatch: AppDispatch;
@@ -21,37 +17,56 @@ interface CreatePostFormProps {
   category: string;
 }
 
-const CreatePostForm = ({
+export default function CreatePostForm({
   dispatch,
   router,
   viewPortSize,
-  category
-}: CreatePostFormProps) => {
+  category,
+}: CreatePostFormProps) {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [newCategory, setNewCategory] = useState<string>("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(setClickPost("inactive"));
 
     try {
-      const response = await fetch("/api/notes", {
-        body: JSON.stringify({ title, description, type: category }),
+      let finalCategory = category;
+
+      if (newCategory) {
+        const response = await fetch("/api/categories", {
+          body: JSON.stringify({ type: newCategory }),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        mutate("/api/categories");
+
+        if (!response.ok) {
+          throw new Error("Failed to create new category.");
+        }
+        finalCategory = newCategory;
+      }
+
+      const noteResponse = await fetch("/api/notes", {
+        body: JSON.stringify({ title, description, type: finalCategory }),
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      if (response.ok) {
-        mutate("/api/notes");
-        router.push("/home");
-        return response;
-      } else {
-        return;
+      if (!noteResponse.ok) {
+        throw new Error("Failed to create note.");
       }
+
+      mutate("/api/notes");
+      router.push("/home");
     } catch (error) {
-      console.error(error);
+      console.error("Submission error:", error);
     }
   }
 
@@ -73,6 +88,21 @@ const CreatePostForm = ({
         className={`placeholder-light-800 text-white font-normal outline-0 w-full max-md:ml-4 ${"formPostNote"}`}
         onChange={(e) => setDescription(e.target.value)}
       />
+      <div
+        className={`createNewCategory flex flex-col w-full border-t border-dark-600 mt-4`}
+      >
+        <div
+          className={`createNewCategoryWrapper flex flex-col w-full max-md:px-4 mt-2`}
+        >
+          <p className="text-light-800 mb-1">Create new category:</p>
+          <input
+            type="text"
+            className="placeholder-light-800 text-white font-normal outline-0 w-full"
+            placeholder="Type her your new category"
+            onChange={(e) => setNewCategory(e.target.value)}
+          />
+        </div>
+      </div>
       {viewPortSize.width < 768 ? (
         <button
           type="submit"
@@ -89,38 +119,6 @@ const CreatePostForm = ({
         </button>
       )}
     </form>
-  );
-};
-
-export default function CreatePost() {
-  const dispatch: AppDispatch = useDispatch();
-  // const clickState = useSelector((state: RootState) => state.clickPost.click);
-  const router = useRouter();
-  const viewPortSize = useViewPortSize();
-  const [category, setCategory] = useState<string>("");
-
-  return (
-    <section
-      className={`flex flex-col w-full mt-9 md:ml-12 md:mr-20 ${"createPost"}`}
-    >
-      <button
-        className={`max-md:ml-4 ${"createPostBackButton"}`}
-        onClick={() =>
-          viewPortSize.width < 768
-            ? router.push("/home")
-            : dispatch(setClickPost("inactive"))
-        }
-      >
-        <ArrowLeftIcon className="w-6 text-white" />
-      </button>
-      <CreatePostForm
-        dispatch={dispatch}
-        router={router}
-        viewPortSize={viewPortSize}
-        category={category}
-      />
-      <ChooseCategory category={category} setCategory={setCategory}/>
-    </section>
   );
 }
 
