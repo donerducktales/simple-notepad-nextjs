@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import NoteLayout from "../noteLayout/NoteLayout";
 import CreatePost from "@/components/CreatePost/CreatePost";
 import useViewPortSize from "@/assets/customHooks/useViewPortSize";
-import EditNoteForm from "@/components/EditNoteForm";
+import EditNote from "@/components/EditNote/EditNote";
 
 export default function RightSideLayout() {
    const clickState = useSelector((state: RootState) => state.clickPost.click);
@@ -20,7 +20,7 @@ export default function RightSideLayout() {
       if (clickState === 'createPost') {
          return <CreatePost />
       } else if (clickState === 'updatePost') {
-         return <EditNoteForm noteId={id?.toString() as string} title={title} description={description} />
+         return <EditNote noteId={id?.toString() as string} title={title} description={description} />
       } else {
          return <NoteLayout />
       }
