@@ -8,37 +8,34 @@ import { Dispatch, useEffect, useState } from "react";
 import { mutate } from "swr";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
+import CreateCategory from "../CreateCategory";
 
 interface EditNoteFormProps {
   dispatch: AppDispatch;
   router: AppRouterInstance;
-  viewPortSize: {
-    width: number;
-    height: number;
-  };
   noteId: string;
   title: string;
   description: string;
   category: string;
-  setCategory: Dispatch<string>
+  setCategory: Dispatch<string>;
 }
 
 export default function EditNoteForm({
   dispatch,
   router,
-  viewPortSize,
   noteId,
   title,
   description,
   category,
-  setCategory
+  setCategory,
 }: EditNoteFormProps) {
   const [noteTitle, setTitle] = useState<string>(title);
   const [noteDescription, setDescription] = useState<string>(description);
-  const reduxCategory = useSelector((state: RootState) => state.clickNote.type)
+  const [newCategory, setNewCategory] = useState<string>("");
+  const reduxCategory = useSelector((state: RootState) => state.clickNote.type);
 
   useEffect(() => {
-    setCategory(reduxCategory)
+    setCategory(reduxCategory);
   }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -46,12 +43,31 @@ export default function EditNoteForm({
     dispatch(setClickPost("inactive"));
 
     try {
-      const response = await fetch("/api/notes", {
+      let finalCategory = category;
+
+      if (newCategory) {
+        const response = await fetch("/api/categories", {
+          body: JSON.stringify({ type: newCategory }),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        mutate("/api/categories");
+
+        if (!response.ok) {
+          throw new Error("Failed to create new category.");
+        }
+        finalCategory = newCategory;
+      }
+
+      const updateNoteResponse = await fetch("/api/notes", {
         body: JSON.stringify({
           _id: noteId,
           title: noteTitle,
           description: noteDescription,
-          type: category,
+          type: finalCategory,
         }),
         method: "PUT",
         headers: {
@@ -59,17 +75,16 @@ export default function EditNoteForm({
         },
       });
 
-      if (response.ok) {
-        mutate("/api/notes");
-        dispatch(resetClickNoteState());
-        router.push("/home");
-        return response;
-      } else {
-        return;
+      if (!updateNoteResponse.ok) {
+        throw new Error("Failed to create note.");
       }
+
+      mutate("/api/notes");
+      dispatch(resetClickNoteState());
+      router.push("/home");
+      return updateNoteResponse;
     } catch (error) {
-      console.error(error);
-      throw error;
+      console.error("Submission error:", error);
     }
   }
 
@@ -100,21 +115,13 @@ export default function EditNoteForm({
         value={noteDescription}
         onChange={(e) => setDescription(e.target.value)}
       />
-      {viewPortSize.width < 768 ? (
-        <button
-          type="submit"
-          className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"formPostSubmitButton"}`}
-        >
-          <ArrowUpTrayIcon className="text-white w-6" />
-        </button>
-      ) : (
-        <button
-          type="submit"
-          className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"formPostSubmitButton"}`}
-        >
-          <ArrowUpTrayIcon className="text-white w-6" />
-        </button>
-      )}
+      <CreateCategory setNewCategory={setNewCategory} />
+      <button
+        type="submit"
+        className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"formPostSubmitButton"}`}
+      >
+        <ArrowUpTrayIcon className="text-white w-6" />
+      </button>
     </form>
   );
 }

@@ -6,21 +6,17 @@ import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useState } from "react";
 import { mutate } from "swr";
+import CreateCategory from "../CreateCategory";
 
 interface CreatePostFormProps {
   dispatch: AppDispatch;
   router: AppRouterInstance;
-  viewPortSize: {
-    width: number;
-    height: number;
-  };
   category: string;
 }
 
 export default function CreatePostForm({
   dispatch,
   router,
-  viewPortSize,
   category,
 }: CreatePostFormProps) {
   const [title, setTitle] = useState<string>("");
@@ -88,37 +84,13 @@ export default function CreatePostForm({
         className={`placeholder-light-800 text-white font-normal outline-0 w-full max-md:ml-4 ${"formPostNote"}`}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <div
-        className={`createNewCategory flex flex-col w-full border-t border-dark-600 mt-4`}
+      <CreateCategory setNewCategory={setNewCategory} />
+      <button
+        type="submit"
+        className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"formPostSubmitButton"}`}
       >
-        <div
-          className={`createNewCategoryWrapper flex flex-col w-full max-md:px-4 mt-2`}
-        >
-          <p className="text-light-800 mb-1">Create new category:</p>
-          <input
-            type="text"
-            className="placeholder-light-800 text-white font-normal outline-0 w-full"
-            placeholder="Type her your new category"
-            onChange={(e) => setNewCategory(e.target.value)}
-          />
-        </div>
-      </div>
-      {viewPortSize.width < 768 ? (
-        <button
-          type="submit"
-          className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"formPostSubmitButton"}`}
-        >
-          <ArrowUpTrayIcon className="text-white w-6" />
-        </button>
-      ) : (
-        <button
-          type="submit"
-          className={`fixed md:right-10 md:bottom-9 right-4 bottom-6 w-14 h-14 rounded-full bg-primaryBlue flex justify-center items-center ${"formPostSubmitButton"}`}
-        >
-          <ArrowUpTrayIcon className="text-white w-6" />
-        </button>
-      )}
+        <ArrowUpTrayIcon className="text-white w-6" />
+      </button>
     </form>
   );
 }
-
