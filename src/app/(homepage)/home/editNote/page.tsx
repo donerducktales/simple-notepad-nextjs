@@ -1,6 +1,6 @@
 'use client'
 
-import EditNoteForm from '@/components/EditNoteForm'
+import EditNoteForm from '@/components/EditNote/EditNote'
 import { RootState } from '@/lib/store';
 import { useSelector } from 'react-redux';
 

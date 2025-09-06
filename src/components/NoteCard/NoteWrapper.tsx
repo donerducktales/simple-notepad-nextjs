@@ -66,6 +66,7 @@ export default function NoteWrapper() {
           title={el.title}
           description={el.description}
           _id={el._id}
+          type={el.type}
         />
       ))}
     </div>

@@ -4,7 +4,7 @@ import { setClickPost } from "@/lib/features/createPostSlice";
 import { AppDispatch } from "@/lib/store";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { Dispatch, useState } from "react";
+import { useState } from "react";
 import { mutate } from "swr";
 
 interface CreatePostFormProps {

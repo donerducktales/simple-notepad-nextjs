@@ -5,12 +5,14 @@ interface ClickState {
    _id: ObjectId | null,
    title: string,
    description: string,
+   type: string,
 }
 
 const initialState: ClickState = {
    _id: null,
    title: 'Hello!',
    description: 'Here will be your notes',
+   type: ""
 }
 
 const clickNoteSlice = createSlice({
@@ -26,9 +28,12 @@ const clickNoteSlice = createSlice({
       setDescription: (state, action: PayloadAction<string>) => {
          state.description = action.payload
       },
+      setCategory: (state, action: PayloadAction<string>) => {
+        state.type = action.payload
+      },
       resetClickNoteState: () => ({ ...initialState }),
    },
 });
 
 export default clickNoteSlice.reducer;
-export const { setId, setTitle, setDescription, resetClickNoteState } = clickNoteSlice.actions;
+export const { setId, setTitle, setDescription, setCategory, resetClickNoteState } = clickNoteSlice.actions;

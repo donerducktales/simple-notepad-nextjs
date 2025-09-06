@@ -17,7 +17,6 @@ export default function ChooseCategory({
   setCategory: Dispatch<string>;
 }) {
   const [data, setData] = useState<WithId<Data>[]>([]);
-  // const [category, setCategory] = useState<string>("")
 
   useEffect(() => {
     async function fetchData() {

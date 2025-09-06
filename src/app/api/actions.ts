@@ -60,13 +60,13 @@ export async function getNoteById(id: string) {
    }
 }
 
-export async function updateNote({_id, title, description}: {_id: ObjectId, title: string, description: string}) {
+export async function updateNote({_id, title, description, type}: {_id: ObjectId, title: string, description: string, type: string}) {
    try {
       const myClient = await client.connect();
       const myDb = myClient.db('notes');
       const updateOneNote = await myDb
          .collection('note')
-         .findOneAndUpdate({ _id: new ObjectId(_id) }, { $set: { title: title, description: description } })
+         .findOneAndUpdate({ _id: new ObjectId(_id) }, { $set: { title: title, description: description, type: type } })
    
       return updateOneNote
    } catch (error) {

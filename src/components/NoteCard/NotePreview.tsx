@@ -2,7 +2,7 @@
 
 import useViewPortSize from "@/assets/customHooks/useViewPortSize";
 import { nunito } from "@/assets/fonts";
-import { setDescription, setId, setTitle } from "@/lib/features/clickSlice";
+import { setCategory, setDescription, setId, setTitle } from "@/lib/features/clickSlice";
 import { setClickPost } from "@/lib/features/createPostSlice";
 import { AppDispatch } from "@/lib/store";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
@@ -14,8 +14,8 @@ import DeleteNoteButton from "../DeleteNoteButton";
 import { ObjectId } from "mongodb";
 
 export default function NotePreview(
-   {_id, title, description}: 
-   {_id: ObjectId, title: string, description: string}
+   {_id, title, description, type}: 
+   {_id: ObjectId, title: string, description: string, type: string}
 ) {
    const [click, setClick] = useState<boolean>(false);
    const dispatch: AppDispatch = useDispatch();
@@ -27,6 +27,7 @@ export default function NotePreview(
       dispatch(setId(_id));
       dispatch(setTitle(title));
       dispatch(setDescription(description));
+      dispatch(setCategory(type))
       dispatch(setClickPost('inactive'));
       
       if (viewPortSize.width < 768) {

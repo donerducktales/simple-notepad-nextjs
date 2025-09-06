@@ -25,9 +25,9 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
    const body = await request.json()
-   const {_id, title, description} = body;
+   const {_id, title, description, type} = body;
 
-   const updateOneNote = await updateNote({_id, title, description});
+   const updateOneNote = await updateNote({_id, title, description, type});
    
    return new Response(JSON.stringify(updateOneNote));
 }
