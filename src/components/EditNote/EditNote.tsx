@@ -41,7 +41,6 @@ export default function EditNote({
       <EditNoteForm
         dispatch={dispatch}
         router={router}
-        viewPortSize={viewPortSize}
         noteId={noteId}
         title={title}
         description={description}

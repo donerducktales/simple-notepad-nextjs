@@ -33,7 +33,6 @@ export default function CreatePost() {
       <CreatePostForm
         dispatch={dispatch}
         router={router}
-        viewPortSize={viewPortSize}
         category={category}
       />
       <ChooseCategory category={category} setCategory={setCategory} />
