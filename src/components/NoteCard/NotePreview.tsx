@@ -10,7 +10,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import DeleteNoteButton from "../DeleteNoteButton";
+import DeleteNoteButton from "../DeleteNote/DeleteNoteButton";
 import { ObjectId } from "mongodb";
 
 export default function NotePreview(
@@ -67,7 +67,7 @@ export default function NotePreview(
                      <PencilSquareIcon className="w-4 text-primaryBlue" /> 
                      update
                   </button>
-                  <DeleteNoteButton _id={_id.toString()}/>
+                  <DeleteNoteButton _id={_id.toString()} type={type} />
                </div>
             </div>
          }

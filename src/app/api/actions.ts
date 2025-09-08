@@ -45,6 +45,19 @@ export async function deleteNote({_id}: {_id: ObjectId}) {
    }
 }
 
+export async function deleteCategory({type}: {type: string}) {
+  try {
+    const myClient = await client.connect();
+    const myDb = myClient.db("notes");
+    const deleteOneCategory = await myDb.collection("categories").deleteOne({ type });
+
+    return deleteOneCategory;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export async function getNoteById(id: string) {
    try {
       const myClient = await client.connect();

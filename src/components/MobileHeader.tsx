@@ -6,11 +6,12 @@ import { EllipsisVerticalIcon, PencilIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import DeleteNoteButtonMobile from "./DeleteNoteButtonMobile";
+import DeleteNoteButtonMobile from "./DeleteNote/DeleteNoteButtonMobile";
 
 export default function MobileHeader() {
    const [openContext, setOpen] = useState<boolean>(false);
    const noteId = useSelector((state: RootState) => state.clickNote._id);
+   const category = useSelector((state: RootState) => state.clickNote.type);
    
    return (
       <div className={`w-full flex flex-col items-end ${'noteMobileHeaderWrapper'}`}>
@@ -35,7 +36,7 @@ export default function MobileHeader() {
                {
                   openContext && 
                   <div className={`absolute top-8 right-0.5 rounded-sm w-3xs bg-dark-800 mt-3 ${'contextMenu'}`}>
-                     <DeleteNoteButtonMobile _id={noteId?.toString() as string}/>
+                     <DeleteNoteButtonMobile _id={noteId?.toString() as string} type={category}/>
                   </div>
                }  
             </div>

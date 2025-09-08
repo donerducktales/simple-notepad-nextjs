@@ -1,5 +1,5 @@
 import { client } from "@/lib/db";
-import { addCategory } from "../actions";
+import { addCategory, deleteCategory } from "../actions";
 
 export async function GET() {
   try {
@@ -23,4 +23,13 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("route.ts categories", error);
   }
+}
+
+export async function DELETE(request: Request) {
+   const body = await request.json()
+   const {type} = body;
+
+   const deleteOneCategory = await deleteCategory({ type });
+
+   return new Response(JSON.stringify(deleteOneCategory));
 }
