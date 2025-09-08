@@ -12,7 +12,7 @@ export default function CreateCategory({setNewCategory}: {setNewCategory: Dispat
         <input
           type="text"
           className="placeholder-light-800 text-white font-normal outline-0 w-full"
-          placeholder="Type her your new category"
+          placeholder="Type here your new category"
           onChange={(e) => setNewCategory(e.target.value)}
         />
       </div>
