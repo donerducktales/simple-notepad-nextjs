@@ -11,7 +11,6 @@ export async function handleClickDelete({
   type: string;
   dispatch: AppDispatch;
 }) {
-  // 1. Видаляємо нотатку
   const deleteNoteRes = await fetch("api/notes", {
     body: JSON.stringify({ _id: _id }),
     method: "DELETE",
@@ -23,14 +22,13 @@ export async function handleClickDelete({
     return;
   }
 
-  // 2. Отримуємо кількість нотаток у категорії
+  
   const countCategoriesRes = await fetch(`/api/count?type=${type}`, {
     method: "GET",
   });
 
   const parsedCountCategories = await countCategoriesRes.json();
 
-  // 3. Якщо нотаток у категорії не залишилось, видаляємо категорію
   if (parsedCountCategories === 0) {
     const deleteCategoryRes = await fetch("/api/categories", {
       method: "DELETE",
@@ -45,7 +43,6 @@ export async function handleClickDelete({
     }
   }
 
-  // 4. Оновлюємо інтерфейс
   dispatch(setTitle("Hello!"));
   dispatch(setDescription("Here will be your notes"));
   mutate("/api/notes");

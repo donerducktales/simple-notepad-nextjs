@@ -2,7 +2,6 @@ import { client } from "@/lib/db";
 
 export async function GET(request: Request) {
   try {
-    // Отримуємо `type` з URL-параметрів
     const { searchParams } = new URL(request.url);
     const type = searchParams.get("type");
 
