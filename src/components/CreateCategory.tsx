@@ -11,7 +11,7 @@ export default function CreateCategory({setNewCategory}: {setNewCategory: Dispat
         <p className="text-light-800 mb-1">Create new category:</p>
         <input
           type="text"
-          className="placeholder-light-800 text-white font-normal outline-0 w-full"
+          className="placeholder-light-800 text-white font-normal outline-0 w-full mb-1"
           placeholder="Type here your new category"
           onChange={(e) => setNewCategory(e.target.value)}
         />

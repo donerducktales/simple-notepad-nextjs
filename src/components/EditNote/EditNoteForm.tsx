@@ -40,6 +40,12 @@ export default function EditNoteForm({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!noteTitle || !noteDescription || (!newCategory && !category)) {
+      alert("All fields need to be filled");
+      return;
+    }
+    
     dispatch(setClickPost("inactive"));
 
     try {

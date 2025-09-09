@@ -25,6 +25,12 @@ export default function CreatePostForm({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!title || !description || (!newCategory && !category)) {
+      alert("All fields need to be filled");
+      return;
+    }
+
     dispatch(setClickPost("inactive"));
 
     try {
